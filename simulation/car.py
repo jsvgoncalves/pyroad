@@ -8,6 +8,7 @@ from gui.helpers import load_image
 
 
 class CarSprite(pygame.sprite.Sprite):
+    """CarSprite used on pygame GUI"""
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)  # call Sprite intializer
         self.image, self.rect = load_image('chimp.bmp', -1)
@@ -17,6 +18,7 @@ class CarSprite(pygame.sprite.Sprite):
         self.move = 9
 
     def update(self):
+        # Just moves the car from one side to the other
         newpos = self.rect.move((self.move, 0))
         if self.rect.left < self.area.left or \
            self.rect.right > self.area.right:
@@ -40,5 +42,7 @@ class Car():
         "physics forces update"
         if self.speed < 15:
             self.speed += 1
+
+        # Updates the sprite of the car.
         self.sprite.update()
         print(self.name, self.speed)

@@ -7,20 +7,32 @@ from gui.helpers import handle_input
 
 
 class SimulationLooper():
-    """moves a clenched fist on the screen, following the mouse"""
+    """Simulation Core with looper and top-level objects"""
+
     def __init__(self, name, gui):
-        self.gui = gui
+        # Init Simulation model
         self.simulation = SimulationState()
+
+        # Add the sprites from the current simulation to the GUI
         sprites = self.simulation.get_sprites()
+        self.gui = gui
         self.gui.add_sprites(sprites)
 
     def run(self):
         "simulation objects update"
+
         # Main Loop
         while 1:
             # gui.clock.tick(60)  # !FIXME: Shouldn't be dependent on GUI
+            # Inputs
             simulation_is_ending = handle_input()
+
+            # Model updates
             self.simulation.update()
+
+            # GUI
             self.gui.update()
+
+            # Exiting
             if simulation_is_ending:
                 return
