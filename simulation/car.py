@@ -4,7 +4,7 @@
 ## 2014 João Gonçalves.
 import pygame
 from gui.helpers import load_image
-#from time import sleep
+from time import sleep
 
 
 class CarSprite(pygame.sprite.Sprite):
@@ -13,25 +13,23 @@ class CarSprite(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)  # call Sprite intializer
         self.image, self.rect = load_image('chimp.bmp', -1)
         screen = pygame.display.get_surface()
+        # The current screen area
         self.area = screen.get_rect()
         self.rect.topleft = 10, 10
-        self.move = 9
+        self.move_x = 9
+        self.move_y = 9
 
-    def update(self):
+    def update(self, move_x, move_y):
         # Just moves the car from one side to the other
-        newpos = self.rect.move((self.move, 0))
-        if self.rect.left < self.area.left or \
-           self.rect.right > self.area.right:
-            self.move = -self.move
-            newpos = self.rect.move((self.move, 0))
-            self.image = pygame.transform.flip(self.image, 1, 0)
-        self.rect = newpos
+        # rect.move(x_offset, y_offset)
+        self.rect = self.rect.move((move_x, move_y))
 
 
 class Car():
     """Basic car model"""
     def __init__(self, name):
-        self.speed = 0
+        self.speed = [0, 1]
+        self.pos = [0, 0]
         self.name = name
         self.sprite = CarSprite()
 
@@ -40,9 +38,12 @@ class Car():
 
     def update(self):
         "physics forces update"
-        if self.speed < 15:
-            self.speed += 1
+        print(self.pos)
+        sleep(0.1)
+        if self.speed[0] < 3:
+            self.speed[0] += 1
+        self.pos[0] += self.speed[0]
+        self.pos[1] += self.speed[1]
 
         # Updates the sprite of the car.
-        self.sprite.update()
-        print(self.name, self.speed)
+        self.sprite.update(self.pos[0], self.pos[1])
