@@ -12,12 +12,6 @@ class CarSprite(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)  # call Sprite intializer
         self.image, self.rect = load_image('chimp.bmp', -1)
-        screen = pygame.display.get_surface()
-        # The current screen area
-        self.area = screen.get_rect()
-        self.rect.topleft = 10, 10
-        self.move_x = 9
-        self.move_y = 9
 
     def update(self, move_x, move_y):
         # Just moves the car from one side to the other
@@ -26,12 +20,25 @@ class CarSprite(pygame.sprite.Sprite):
 
 
 class Car():
-    """Basic car model"""
+    """Basic car model
+       Car effectors:
+        - acceleration pedal [0..1]
+        - brake pedal [0..1]
+        - steering wheel [-1..1]
+    """
+
     def __init__(self, name):
-        self.speed = [0, 1]
-        self.pos = [0, 0]
         self.name = name
         self.sprite = CarSprite()
+
+        # Init car state
+        self.speed = [0, 1]
+        self.pos = [0, 0]
+
+        # Init effectors state
+        self.acceleration = 0
+        self.brake = 0
+        self.steering = 0
 
     def get_sprite(self):
         return self.sprite
