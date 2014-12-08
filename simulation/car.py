@@ -43,9 +43,13 @@ class Car():
     def get_sprite(self):
         return self.sprite
 
-    def update(self):
-        "physics forces update"
-        print(self.pos)
+    def set_sensors(self, sensor_data):
+        """Inputs the data from the sensors"""
+        return
+
+    def update(self, delta_seconds):
+        """physics forces update"""
+        #print(self.pos)
         sleep(0.1)
         if self.speed[0] < 3:
             self.speed[0] += 1
@@ -53,4 +57,5 @@ class Car():
         self.pos[1] += self.speed[1]
 
         # Updates the sprite of the car.
-        self.sprite.update(self.pos[0], self.pos[1])
+        self.sprite.update(self.pos[0] * delta_seconds,
+                           self.pos[1] * delta_seconds)

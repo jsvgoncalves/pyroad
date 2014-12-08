@@ -15,8 +15,12 @@ class SimulationState():
     def get_sprites(self):
         return self.car1.get_sprite()
 
-    def update(self):
+    def update(self, delta_seconds):
         "simulation objects update"
+
         # Update vehicles
-        self.car1.update()
-        self.car2.update()
+        # Maybe it would be best to request intentions from cars
+        # And use physics engine, calculate new car state,
+        # And give it back to the car
+        self.car1.update(delta_seconds)
+        self.car2.update(delta_seconds)

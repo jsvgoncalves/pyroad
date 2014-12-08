@@ -4,6 +4,7 @@
 ## 2014 João Gonçalves.
 from simulationstate import SimulationState
 from gui.helpers import handle_input
+import datetime
 
 
 class SimulationLooper():
@@ -20,15 +21,20 @@ class SimulationLooper():
 
     def run(self):
         "simulation objects update"
-
+        a = datetime.datetime.now()
         # Main Loop
         while 1:
             # gui.clock.tick(60)  # !FIXME: Shouldn't be dependent on GUI
+            b = datetime.datetime.now()
+            c = b - a
+            a = b
+            #print(c.total_seconds())
+
             # Inputs
             simulation_is_ending = handle_input()
 
             # Model updates
-            self.simulation.update()
+            self.simulation.update(c.total_seconds())
 
             # GUI
             self.gui.update()
