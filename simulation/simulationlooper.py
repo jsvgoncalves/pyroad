@@ -3,7 +3,7 @@
 ## This file is part of PyRoad.
 ## 2014 João Gonçalves.
 from simulationstate import SimulationState
-from gui.helpers import handle_input
+from tools.helpers import handle_input
 import datetime
 
 

@@ -27,12 +27,12 @@ class Car():
         - steering wheel [-1..1]
     """
 
-    def __init__(self, name):
+    def __init__(self, name, velocity_x, velocity_y):
         self.name = name
         self.sprite = CarSprite()
 
         # Init car state
-        self.speed = [0, 1]
+        self.velocity = [velocity_x, velocity_y]
         self.pos = [0, 0]
 
         # Init effectors state
@@ -51,11 +51,8 @@ class Car():
         """physics forces update"""
         #print(self.pos)
         sleep(0.1)
-        if self.speed[0] < 3:
-            self.speed[0] += 1
-        self.pos[0] += self.speed[0]
-        self.pos[1] += self.speed[1]
+        self.pos[0] += self.velocity[0] * delta_seconds
+        self.pos[1] += self.velocity[1] * delta_seconds
 
         # Updates the sprite of the car.
-        self.sprite.update(self.pos[0] * delta_seconds,
-                           self.pos[1] * delta_seconds)
+        self.sprite.update(self.pos[0], self.pos[1])

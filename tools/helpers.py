@@ -6,7 +6,7 @@
 from os.path import join
 import pygame
 from pygame.locals import *
-
+from simulation.car import Car
 
 def load_image(name, colorkey=None):
     fullname = join('res', 'img', name)
@@ -35,3 +35,9 @@ def handle_input():
             print("Mouse down")
         elif event.type is MOUSEBUTTONUP:
             print("Mouse up")
+
+
+def load_cars():
+    car1 = Car("Carro 1", 2, 1)
+    car2 = Car("Carro 2", 1, 2)
+    return [car1, car2]
