@@ -8,6 +8,7 @@ import pygame
 from pygame.locals import *
 from simulation.car import Car
 
+
 def load_image(name, colorkey=None):
     fullname = join('res', 'img', name)
     print(fullname)

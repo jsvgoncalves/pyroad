@@ -2,21 +2,23 @@
 #
 ## This file is part of PyRoad.
 ## 2014 João Gonçalves.
+import tools.helpers
 import pygame
-from gui.helpers import load_image
-from time import sleep
+#from time import sleep
+GUI_SCALE = 2
 
 
 class CarSprite(pygame.sprite.Sprite):
     """CarSprite used on pygame GUI"""
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)  # call Sprite intializer
-        self.image, self.rect = load_image('chimp.bmp', -1)
+        self.image, self.rect = tools.helpers.load_image('chimp.bmp', -1)
 
     def update(self, move_x, move_y):
         # Just moves the car from one side to the other
         # rect.move(x_offset, y_offset)
-        self.rect = self.rect.move((move_x, move_y))
+        self.rect = self.rect.move((GUI_SCALE * move_x,
+                                    GUI_SCALE * move_y))
 
 
 class Car():
@@ -33,7 +35,8 @@ class Car():
 
         # Init car state
         self.velocity = [velocity_x, velocity_y]
-        self.pos = [0, 0]
+        self.position = [0, 0]
+        self.delta_pos = [0, 0]
 
         # Init effectors state
         self.acceleration = 0
@@ -49,10 +52,14 @@ class Car():
 
     def update(self, delta_seconds):
         """physics forces update"""
-        #print(self.pos)
-        sleep(0.1)
-        self.pos[0] += self.velocity[0] * delta_seconds
-        self.pos[1] += self.velocity[1] * delta_seconds
+        self.delta_pos[0] = self.velocity[0] * delta_seconds
+        self.delta_pos[1] = self.velocity[1] * delta_seconds
+
+        #print(self.position)
+        #print(self.delta_pos)
+        #print(delta_seconds)
+        self.position[0] += self.delta_pos[0]
+        self.position[1] += self.delta_pos[1]
 
         # Updates the sprite of the car.
-        self.sprite.update(self.pos[0], self.pos[1])
+        self.sprite.update(self.position[0], self.position[1])

@@ -6,6 +6,8 @@ from simulationstate import SimulationState
 from tools.helpers import handle_input
 import datetime
 
+PHYSICS_UPDATE_SECONDS = 0.05
+GUI_UPDATE_SECONDS = 0.05
 
 class SimulationLooper():
     """Simulation Core with looper and top-level objects"""
@@ -21,23 +23,30 @@ class SimulationLooper():
 
     def run(self):
         "simulation objects update"
-        a = datetime.datetime.now()
+        previous_time = datetime.datetime.now()
+        last_update_gui = previous_time
         # Main Loop
         while 1:
             # gui.clock.tick(60)  # !FIXME: Shouldn't be dependent on GUI
-            b = datetime.datetime.now()
-            c = b - a
-            a = b
-            #print(c.total_seconds())
+            current_time = datetime.datetime.now()
+            time_diff = current_time - previous_time
+            #print(time_diff.total_seconds())
 
             # Inputs
             simulation_is_ending = handle_input()
 
             # Model updates
-            self.simulation.update(c.total_seconds())
+            if(time_diff.total_seconds() > PHYSICS_UPDATE_SECONDS):
+                self.simulation.update(time_diff.total_seconds())
+                previous_time = current_time
 
             # GUI
-            self.gui.update()
+            gui_time_diff = current_time - last_update_gui
+            #print(gui_time_diff.total_seconds())
+
+            if(gui_time_diff.total_seconds() > GUI_UPDATE_SECONDS):
+                self.gui.update()
+                last_update_gui = current_time
 
             # Exiting
             if simulation_is_ending:
