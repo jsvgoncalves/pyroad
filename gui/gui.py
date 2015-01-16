@@ -7,12 +7,12 @@ from pygame.locals import *
 
 
 class Gui():
-    """moves a clenched fist on the self, following the mouse"""
+    """Modular GUI"""
     def __init__(self):
         #Initialize Everything
         pygame.init()
         self.screen = pygame.display.set_mode((800, 600))
-        pygame.display.set_caption('Monkey Fever')
+        pygame.display.set_caption('PyRoad')
         pygame.mouse.set_visible(0)
 
         #Create The Backgound
