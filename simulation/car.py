@@ -43,6 +43,10 @@ class Car():
         self.brake = 0
         self.steering = 0
 
+        # Physical dimensions of the cars
+        self.width = [2, 2]  # [left, right] from the center of the car
+        self.length = [4, 5]  # [back, front] from the center of the car
+
     def get_sprite(self):
         return self.sprite
 
