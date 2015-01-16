@@ -70,6 +70,10 @@ class Car():
         self.width = [2, 2]  # [left, right] from center
         self.height = [3, 4]  # [back, front] from center
 
+        # Physical dimensions of the cars
+        self.width = [2, 2]  # [left, right] from the center of the car
+        self.length = [4, 5]  # [back, front] from the center of the car
+
     def get_sprite(self):
         return self.sprite
 
