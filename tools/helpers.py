@@ -11,7 +11,7 @@ from simulation.car import Car
 
 def load_image(name, colorkey=None):
     fullname = join('res', 'img', name)
-    print(fullname)
+    #print(fullname)
     try:
         image = pygame.image.load(fullname)
     except pygame.error, message:

@@ -11,7 +11,7 @@ class Gui():
     def __init__(self):
         #Initialize Everything
         pygame.init()
-        self.screen = pygame.display.set_mode((800, 600))
+        self.screen = pygame.display.set_mode((1000, 600))
         pygame.display.set_caption('PyRoad')
         pygame.mouse.set_visible(0)
 
@@ -19,15 +19,6 @@ class Gui():
         self.background = pygame.Surface(self.screen.get_size())
         self.background = self.background.convert()
         self.background.fill((80, 100, 60))
-
-        #Put Text On The self.Background, Centered
-        if pygame.font:
-            font = pygame.font.Font(None, 36)
-            # = font.render("Pummel The Chimp, And Win $$$", 1,
-            #                   (10, 10, 10))
-            #textpos = text.get_rect(centerx=self.background.get_width()/2)
-            #self.background.blit(text, textpos)
-            #self.background.blit(text, textpos)
 
         #Display The self.Background
         self.screen.blit(self.background, (0, 0))
