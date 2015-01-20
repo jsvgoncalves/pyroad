@@ -87,6 +87,13 @@ class Car():
             track_edges_dist - [0,100]x18 sliced
             track_axis_dist -
         """
+        self._angle = sensor_data['_angle']
+        self.angle = sensor_data['angle']
+        self.opponents_dist = sensor_data['opponents_dist']
+        self.speed = sensor_data['speed']
+        self.acceleration = sensor_data['acceleration']
+        self.track_edges_dist = sensor_data['track_edges_dist']
+        self.track_axis_dist = sensor_data['track_axis_dist']
         return
 
     def update(self, new_position):

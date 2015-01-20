@@ -7,7 +7,9 @@ import math
 
 
 class SimulationState():
-    """moves a clenched fist on the screen, following the mouse"""
+    """Data structure of simulation state.
+    Also responsible for bridging the vehicles with the physics engine.
+    """
     def __init__(self):
         # Vehicles in the simulation
         self.cars = load_cars()
@@ -28,11 +30,11 @@ class SimulationState():
         # And give it back to the car
 
         car = self.cars[0]
-        # acceleration pedal * max aceleration
+        # acceleration pedal * max acceleration
         acel_pedal, brake_pedal, steering = car.get_effectors()
         acceleration = (acel_pedal *
                         car.max_acceleration)
-        #print("acel_pedal, aceleration")
+        #print("acel_pedal, acceleration")
         #print(acel_pedal, acceleration)
         # Update car angle
         angle_changed = car.max_steering_angle * steering
