@@ -39,6 +39,20 @@ def handle_input():
 
 
 def load_cars():
-    car1 = Car("Carro 1", 2, 1)
-    car2 = Car("Carro 2", 1, 2)
+    params1 = {}
+    params2 = {
+                'routes': {
+                    'route_size': 2,
+                    'route': [
+                        [1, 2, 0, 0],
+                        [3, 1, 0, 0]
+                    ]
+                }
+              }
+    params2 = {
+                #'position': [10, 10],
+                'angle': 0
+              }
+    car1 = Car("Carro 1", params1)
+    car2 = Car("Carro 2", params2)
     return [car1, car2]

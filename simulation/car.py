@@ -42,17 +42,16 @@ class Car():
         - steering wheel [-1..1]
     """
 
-    def __init__(self, name, velocity_x, velocity_y):
+    def __init__(self, name, init_params):
         self.name = name
         self.sprite = CarSprite()
 
         # Init car state
-        #self.velocity = [velocity_x, velocity_y]
         self.velocity = [0, 0]
         self.position = [0, 0]
         self.delta_pos = [0, 0]  # Unused
         self.angle = 1.0471975511965976  # rad
-        #self.angle = 0.0  # rad
+        # self.angle = 0.0  # rad
 
         # Init effectors state
         self.acceleration_pedal = 0.4  # 0..1
@@ -65,11 +64,31 @@ class Car():
         # search ac 1g
         self.max_acceleration = 3  # m/s^2
         self.max_decceleration = -10  # m/s^2  ( usually -4 )
-        #self.engine_power = 10  # Maybe later..
+        # self.engine_power = 10  # Maybe later..
 
         # Physical dimensions of the cars
         self.width = [2, 2]  # [left, right] from the center of the car
         self.length = [4, 5]  # [back, front] from the center of the car
+
+        # From parameters
+        if 'position' in init_params:
+            self.position = init_params['position']
+
+        if 'angle' in init_params:
+            self.angle = init_params['angle']
+
+        # Routes (Intention/Plan) for the car
+        self.route = []
+        self.current_route = 0
+
+        if 'routes' in init_params:
+            self.route = init_params['routes']['route']
+            self.route_size = init_params['routes']['route_size'] - 1
+            self.has_routes = True
+        else:
+            self.has_routes = False
+
+        self.elapsed_time = 0
 
     def get_sprite(self):
         return self.sprite
@@ -85,13 +104,13 @@ class Car():
             track_axis_dist -
             elapsed_time - elapsed_time since simulation start
         """
-        print sensor_data['elapsed_time']
+        self.elapsed_time = sensor_data['elapsed_time']
         return
 
     def update(self, new_position):
         """physics forces update"""
         # Updates car geo variables
-        #self.steering = 0.002
+        # self.steering = 0.002
         # if angle > 360
         if self.angle >= 6.28318531:
             self.angle = 0
@@ -108,6 +127,14 @@ class Car():
         print(self.position[0],
               self.position[1],
               self.angle)
+
+        if self.has_routes:
+            if self.route[self.current_route][0] >= self.elapsed_time:
+                self.steering = self.route[self.current_route][1]
+                self.acceleration_pedal = self.route[self.current_route][2]
+                self.brake_pedal = self.route[self.current_route][3]
+                if self.current_route < self.route_size:
+                    self.current_route += 1
 
     def get_effectors(self):
         """ sends the effectors back to the simulation engine """
