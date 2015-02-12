@@ -51,8 +51,8 @@ class Car():
         self.velocity = [0, 0]
         self.position = [0, 0]
         self.delta_pos = [0, 0]  # Unused
-        #self.angle = 0.71  # rad
-        self.angle = 0.0  # rad
+        self.angle = 1.0471975511965976  # rad
+        #self.angle = 0.0  # rad
 
         # Init effectors state
         self.acceleration_pedal = 0.4  # 0..1
@@ -61,14 +61,11 @@ class Car():
 
         # Car characterics
         # self.max_turning_angle = ~ 8m radius
-        self.max_steering_angle = 0.785398163  # 45 deg
+        self.max_steering_angle = 0.7853981633974483  # 45 deg
         # search ac 1g
         self.max_acceleration = 3  # m/s^2
         self.max_decceleration = -10  # m/s^2  ( usually -4 )
         #self.engine_power = 10  # Maybe later..
-
-        self.width = [2, 2]  # [left, right] from center
-        self.height = [3, 4]  # [back, front] from center
 
         # Physical dimensions of the cars
         self.width = [2, 2]  # [left, right] from the center of the car
@@ -86,13 +83,15 @@ class Car():
             speed_y -
             track_edges_dist - [0,100]x18 sliced
             track_axis_dist -
+            elapsed_time - elapsed_time since simulation start
         """
+        print sensor_data['elapsed_time']
         return
 
     def update(self, new_position):
         """physics forces update"""
         # Updates car geo variables
-        self.steering = 0.002
+        #self.steering = 0.002
         # if angle > 360
         if self.angle >= 6.28318531:
             self.angle = 0
