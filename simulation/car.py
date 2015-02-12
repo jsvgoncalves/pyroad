@@ -104,13 +104,13 @@ class Car():
             track_axis_dist -
             elapsed_time - elapsed_time since simulation start
         """
-        self._angle = sensor_data['_angle']
-        self.angle = sensor_data['angle']
-        self.opponents_dist = sensor_data['opponents_dist']
-        self.speed = sensor_data['speed']
-        self.acceleration = sensor_data['acceleration']
-        self.track_edges_dist = sensor_data['track_edges_dist']
-        self.track_axis_dist = sensor_data['track_axis_dist']
+        # self._angle = sensor_data['_angle']
+        # self.angle = sensor_data['angle']
+        # self.opponents_dist = sensor_data['opponents_dist']
+        # self.speed = sensor_data['speed']
+        # self.acceleration = sensor_data['acceleration']
+        # self.track_edges_dist = sensor_data['track_edges_dist']
+        # self.track_axis_dist = sensor_data['track_axis_dist']
         self.elapsed_time = sensor_data['elapsed_time']
         return
 

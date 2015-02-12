@@ -7,14 +7,9 @@ import math
 
 
 class SimulationState():
-<<<<<<< HEAD
-
-    """"""
-=======
     """Data structure of simulation state.
     Also responsible for bridging the vehicles with the physics engine.
     """
->>>>>>> d295a0e1fe8639c5fba7fb56e3b96d1cfead1602
     def __init__(self):
         # Vehicles in the simulation
         self.cars = load_cars()
