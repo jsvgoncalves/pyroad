@@ -57,10 +57,20 @@ def load_cars():
                 },
                 'angle': 0
               }
-    #params2 = {
-    #            #'position': [10, 10],
-    #            'angle': 0
-    #          }
+    params3 = {
+               'position': [2, 2],
+               'angle': 6,
+               'routes': {
+                    'route_size': 2,
+                    'route': [
+                        # timestamp, wheel, accel, brake
+                        [13, 0.02, 0.2, 0],
+                        [18, 0.0, 0.2, 0],
+                        [3, 0.02, 1, 0],
+                    ]
+                },
+             }
     car1 = Car("Carro 1", params1)
     car2 = Car("Carro 2", params2)
-    return [car1, car2]
+    car3 = Car("Carro 3", params3)
+    return [car1, car2, car3]
