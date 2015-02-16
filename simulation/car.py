@@ -8,7 +8,7 @@ import pygame
 from math import degrees
 
 #from time import sleep
-GUI_SCALE = 1
+GUI_SCALE = 100
 
 
 class CarSprite(pygame.sprite.Sprite):
@@ -17,14 +17,22 @@ class CarSprite(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)  # call Sprite intializer
         self.master_image, self.rect = tools.helpers.load_image('car.png', -1)
         self.image = self.master_image
+        self.previous = [0, 0]
 
-    def update(self, move_x, move_y, current_angle):
+    def update(self, pos_x, pos_y, current_angle):
         # Just moves the car from one side to the other
         # rect.move(x_offset, y_offset)
-        self.rect = self.rect.move(0, 0)
-        self.rect = self.rect.move((GUI_SCALE * move_x,
-                                    GUI_SCALE * move_y))
+        #self.rect.center = (GUI_SCALE * move_x, GUI_SCALE * move_y)
+        # Move to origin
+        self.rect.move_ip((-GUI_SCALE * self.previous[0],
+                           -GUI_SCALE * self.previous[1]))
+        # Move to new position
+        self.rect.move_ip((GUI_SCALE * pos_x,
+                           GUI_SCALE * pos_y))
+        # Rotate
         self.rot_center(-degrees(current_angle))
+        # Update position meta
+        self.previous = (pos_x, pos_y)
 
     def rot_center(self, angle):
         """rotate a Surface, maintaining position."""
@@ -82,10 +90,13 @@ class Car():
         self.current_route = 0
 
         if 'routes' in init_params:
+            print("I have routes")
             self.route = init_params['routes']['route']
             self.route_size = init_params['routes']['route_size'] - 1
             self.has_routes = True
         else:
+            print("I have no routes")
+            print( init_params)
             self.has_routes = False
 
         self.elapsed_time = 0
@@ -119,10 +130,12 @@ class Car():
         # Updates car geo variables
         # self.steering = 0.002
         # if angle > 360
-        if self.angle >= 6.28318531:
-            self.angle = 0
-        elif self.angle <= -6.28318531:
-            self.angle = 0
+        #assert(self.angle >= 6.28318531), "angle too big"
+        #assert(self.angle <= -6.28318531), "angle too small"
+#        if self.angle >= 6.28318531:
+#            self.angle = 0
+#        elif self.angle <= -6.28318531:
+#            self.angle = 0
 
         # Updates the sprite of the car.
         self.sprite.update(new_position[0],
@@ -130,18 +143,26 @@ class Car():
                            self.angle)
 
         self.position = new_position
-        print("self.position[0], self.position[1], self.angle")
-        print(self.position[0],
-              self.position[1],
-              self.angle)
+        # print("self.position[0], self.position[1], self.angle")
+        # print(self.position[0],
+        #       self.position[1],
+        #       self.angle)
 
         if self.has_routes:
-            if self.route[self.current_route][0] >= self.elapsed_time:
+            if self.elapsed_time >= self.route[self.current_route][0] :
+                print("Following route")
+                print(new_position)
+                #print(self.elapsed_time)
+                #print(self.route[self.current_route][0])
+                print(self.current_route)
                 self.steering = self.route[self.current_route][1]
                 self.acceleration_pedal = self.route[self.current_route][2]
                 self.brake_pedal = self.route[self.current_route][3]
                 if self.current_route < self.route_size:
                     self.current_route += 1
+        else:
+            #print("I have no routes")
+            pass
 
     def get_effectors(self):
         """ sends the effectors back to the simulation engine """

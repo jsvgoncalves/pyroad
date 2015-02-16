@@ -34,6 +34,8 @@ class SimulationState():
             acel_pedal, brake_pedal, steering = car.get_effectors()
             acceleration = (acel_pedal *
                             car.max_acceleration)
+            # Brake pedal
+            acceleration = acceleration * (1 - brake_pedal)
             # print("acel_pedal, aceleration")
             # print(acel_pedal, acceleration)
             # Update car angle
@@ -65,6 +67,12 @@ class SimulationState():
             velocity[0] = car.velocity[0] + delta_accel[0]
             velocity[1] = car.velocity[1] + delta_accel[1]
             # Should control max velocity too
+
+            ### TEMP
+            if acceleration == 0:
+                #print("0 Accel")
+                velocity = [0, 0]
+            ###
 
             # print("vel_x, vel_y")
             # print(velocity[0], velocity[1])
