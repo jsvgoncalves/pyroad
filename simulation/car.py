@@ -90,13 +90,10 @@ class Car():
         self.current_route = 0
 
         if 'routes' in init_params:
-            print("I have routes")
             self.route = init_params['routes']['route']
             self.route_size = init_params['routes']['route_size'] - 1
             self.has_routes = True
         else:
-            print("I have no routes")
-            print( init_params)
             self.has_routes = False
 
         self.elapsed_time = 0
@@ -149,19 +146,13 @@ class Car():
         #       self.angle)
 
         if self.has_routes:
-            if self.elapsed_time >= self.route[self.current_route][0] :
-                print("Following route")
-                print(new_position)
-                #print(self.elapsed_time)
-                #print(self.route[self.current_route][0])
-                print(self.current_route)
+            if self.elapsed_time >= self.route[self.current_route][0]:
                 self.steering = self.route[self.current_route][1]
                 self.acceleration_pedal = self.route[self.current_route][2]
                 self.brake_pedal = self.route[self.current_route][3]
                 if self.current_route < self.route_size:
                     self.current_route += 1
         else:
-            #print("I have no routes")
             pass
 
     def get_effectors(self):

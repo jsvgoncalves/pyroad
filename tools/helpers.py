@@ -8,6 +8,7 @@ import pygame
 from pygame.locals import *
 from simulation.car import Car
 
+CONFIG_DIR = 'config'
 
 def load_image(name, colorkey=None):
     fullname = join('res', 'img', name)
@@ -38,39 +39,26 @@ def handle_input():
             print("Mouse up")
 
 
-def load_cars():
-    params1 = {}
-    params2 = {
-                'routes': {
-                    'route_size': 6,
-                    'route': [
-                        # timestamp, wheel, accel, brake
-                        [1, 0.02, 1, 0],
-                        [2, -0.02, 0.3, 0],
-                        [3, 0.01, 1, 0],
-                        [4, -0.01, 1, 0],
-                        [5, 0.00, 0, 1],
-                        [6, 0.00, 0, 1],
-                        [7, 0.00, 0, 1],
-                        [1000, 0, 0, 0]
-                    ]
-                },
-                'angle': 0
-              }
-    params3 = {
-               'position': [2, 2],
-               'angle': 6,
-               'routes': {
-                    'route_size': 2,
-                    'route': [
-                        # timestamp, wheel, accel, brake
-                        [13, 0.02, 0.2, 0],
-                        [18, 0.0, 0.2, 0],
-                        [3, 0.02, 1, 0],
-                    ]
-                },
-             }
-    car1 = Car("Carro 1", params1)
-    car2 = Car("Carro 2", params2)
-    car3 = Car("Carro 3", params3)
-    return [car1, car2, car3]
+def load_configs(file_path):
+    """Returns list of cars
+
+    Loads all the configurations from the give file_path.
+    Should in the future return multiple configs (not only cars).
+    """
+    import json
+    import os.path as osp
+
+    file_full_path = osp.join(CONFIG_DIR, file_path)
+    with open(file_full_path) as data_file:
+        data = json.load(data_file)
+        # General configs
+        pass
+        # Cars
+        cars = [load_car(car) for car in data['cars'] if data['cars']]
+
+    return cars
+
+
+def load_car(car_json):
+    car = Car("Carro 1", car_json)
+    return car

@@ -2,8 +2,11 @@
 #
 ## This file is part of PyRoad.
 ## 2014 João Gonçalves.
-from tools.helpers import load_cars
+from tools.helpers import load_configs
 import math
+
+#CONFIG_FILE = 'pyroad.json'
+CONFIG_FILE = 'pyroad-2.json'
 
 
 class SimulationState():
@@ -12,7 +15,7 @@ class SimulationState():
     """
     def __init__(self):
         # Vehicles in the simulation
-        self.cars = load_cars()
+        self.cars = load_configs(CONFIG_FILE)
         self.elapsed_time = 0
 
     def get_sprites(self):
