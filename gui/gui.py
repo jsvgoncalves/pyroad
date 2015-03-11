@@ -18,10 +18,10 @@ class Gui():
     """Modular GUI"""
     def __init__(self, simulation_looper):
         self.sim = simulation_looper
-        # self.init_pygame()
+        # self.init_pygame()  # Moved to the run for threading reasons.
 
     def init_pygame(self):
-        # Initialize Everything
+        # Initialize the engine and the display
         pygame.init()
         self.screen = pygame.display.set_mode((1000, 600))
         pygame.display.set_caption('PyRoad')
@@ -44,43 +44,44 @@ class Gui():
 
     def add_sprites(self):
         """ Adds sprites to the allsprites object"""
+        # Cars sprites are in a dict for easy and constant-access time
         self.car_sprites = {}
-        self.cars = self.sim.get_state().cars
-        for car in self.cars:
+        for car in self.sim.get_state().cars:
             self.car_sprites[car.name] = CarSprite()
-        # self.car_sprites = []
-        # for car in cars:
-        #     self.car_sprites.append(CarSprite())
+        # Add the values of the dict to the allsprites object
+        # which is used for rendering
         self.allsprites = pygame.sprite.RenderPlain(self.car_sprites.values())
 
     def update(self):
-        """update"""
+        """Updates the model data and redraws the scene accordingly."""
+        self.update_vehicle_info()
+        self.update_pygame_render()
 
+    def update_vehicle_info(self):
+        """Update the sprite of each car"""
         for car in self.sim.get_state().cars:
-            # pass
             self.car_sprites[car.name].update(car.position[0],
-                                             car.position[1],
-                                             car.angle)
-        # self.update_car(car, delta_seconds)
-        # self.sprite.update(new_position[0],
-        #            new_position[1],
-        #            self.angle)
+                                              car.position[1],
+                                              car.angle)
+
+    def update_pygame_render(self):
+        """Pygame rendering updates"""
+        # Blit the background into the screen
         self.screen.blit(self.background, (0, 0))
+        # Draw car sprites
         self.allsprites.draw(self.screen)
+        # Flip the display (double-buffering)
         pygame.display.flip()
 
     def run(self):
-        # GUI
-        # Extrair para thread
+        """Main GUI Loop"""
+        # Initializes Pygame engine.
+        # Dislocated from Gui.__init__() for threading reasons.
         self.init_pygame()
+        # Creat the datetime for maximizing update rate.
         previous_time = datetime.datetime.now()
-        pygame.init()
         while True:
             current_time = datetime.datetime.now()
-           # print("#gui")
-           # print(current_time)
-            # print("#sim")
-            # print(self.sim.previous_time)
 
             # Handle imput
             simulation_is_ending = handle_input()
@@ -88,9 +89,6 @@ class Gui():
             time_diff = current_time - previous_time
             if(time_diff.total_seconds() > GUI_UPDATE_SECONDS):
                 self.update()
-               # print("#update")
-               # print(datetime.datetime.now())
-
                 previous_time = current_time
 
             # Exiting
@@ -100,29 +98,27 @@ class Gui():
 
 class CarSprite(pygame.sprite.Sprite):
     """CarSprite used on pygame GUI"""
-    def __init__(self):
+    def __init__(self, sprite='car.bmp'):
         pygame.sprite.Sprite.__init__(self)  # call Sprite intializer
-        self.master_image, self.rect = load_image('car.png', -1)
+        self.master_image, self.rect = load_image(sprite, -1)
         self.image = self.master_image
         self.previous = [0, 0]
 
-    def update(self, delta_x, delta_y, current_angle):
-        # Just moves the car from one side to the other
-        # rect.move(x_offset, y_offset)
-        #self.rect.center = (GUI_SCALE * move_x, GUI_SCALE * move_y)
-        # Move to origin
+    def update(self, pos_x, pos_y, current_angle):
+        """Update vehicle coordinates and angle."""
+        # Firstly move the sprite to the origin
         self.rect.move_ip((-GUI_SCALE * self.previous[0],
                            -GUI_SCALE * self.previous[1]))
-        # Move to new position
-        self.rect.move_ip((GUI_SCALE * delta_x,
-                           GUI_SCALE * delta_y))
-        # Rotate
+        # Then move it to the new position
+        self.rect.move_ip((GUI_SCALE * pos_x,
+                           GUI_SCALE * pos_y))
+        # Rotate accordingly
         self.rot_center(-degrees(current_angle))
         # Update position meta
-        self.previous = (delta_x, delta_y)
+        self.previous = (pos_x, pos_y)
 
     def rot_center(self, angle):
-        """rotate a Surface, maintaining position."""
+        """Rotate a Surface, maintaining position."""
         retaining_center = self.rect.center
         self.image = pygame.transform.rotate(self.master_image, angle)
         self.rect = self.image.get_rect()
