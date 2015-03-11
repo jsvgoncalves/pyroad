@@ -5,7 +5,7 @@
 from tools.helpers import load_configs
 import math
 
-#CONFIG_FILE = 'pyroad.json'
+# CONFIG_FILE = 'pyroad.json'
 CONFIG_FILE = 'pyroad-2.json'
 
 
@@ -17,13 +17,6 @@ class SimulationState():
         # Vehicles in the simulation
         self.cars = load_configs(CONFIG_FILE)
         self.elapsed_time = 0
-
-    def get_sprites(self):
-        sprites = []
-        for car in self.cars:
-            sprites.append(car.get_sprite())
-        return sprites
-        # return self.cars[0].get_sprite()
 
     def update(self, delta_seconds):
         "simulation objects update"

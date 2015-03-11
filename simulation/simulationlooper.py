@@ -15,19 +15,13 @@ class SimulationLooper():
         # Init Simulation model
         self.simulation = SimulationState()
 
-        # Add the sprites from the current simulation to the GUI
-        # sprites = self.simulation.get_sprites()
-        # self.gui = gui
-        # self.gui.add_sprites(sprites)
-
     def run(self):
         "simulation objects update"
-       # global client_events
         self.previous_time = datetime.datetime.now()
         # Main Loop
         while True:
             current_time = datetime.datetime.now()
-            #print("#sim")
+            # print("#sim")
             # Inputs
             # simulation_is_ending = handle_input()
             # (timestamp, effectors)
@@ -51,9 +45,9 @@ class SimulationLooper():
     def get_state(self):
         return self.simulation
 
-    def update_coisas(self, car_id, effectors):
-
-        self.simulation.update_car(car_id, effectors)
+    # def update_coisas(self, car_id, effectors):
+    #
+    #    self.simulation.update_car(car_id, effectors)
 
     # registar clientes
     # atualizar carro
