@@ -20,7 +20,6 @@ class Car():
 
     def __init__(self, name, init_params):
         self.name = name
-        # self.sprite = CarSprite()
 
         # Init car state
         self.velocity = [0, 0]
@@ -66,9 +65,6 @@ class Car():
 
         self.elapsed_time = 0
 
-    def get_sprite(self):
-        return self.sprite
-
     def set_sensors(self, sensor_data):
         """Inputs the data from the sensors
             _angle - [-pi, pi] angle between car direction and xx axis
@@ -95,17 +91,12 @@ class Car():
         # Updates car geo variables
         # self.steering = 0.002
         # if angle > 360
-        #assert(self.angle >= 6.28318531), "angle too big"
-        #assert(self.angle <= -6.28318531), "angle too small"
+        # assert(self.angle >= 6.28318531), "angle too big"
+        # assert(self.angle <= -6.28318531), "angle too small"
 #        if self.angle >= 6.28318531:
 #            self.angle = 0
 #        elif self.angle <= -6.28318531:
 #            self.angle = 0
-
-        # Updates the sprite of the car.
-        # self.sprite.update(new_position[0],
-        #                    new_position[1],
-        #                    self.angle)
 
         self.position = new_position
         # print("self.position[0], self.position[1], self.angle")
