@@ -3,49 +3,58 @@
 ## This file is part of PyRoad.
 ## 2014 João Gonçalves.
 from simulationstate import SimulationState
-from tools.helpers import handle_input
 import datetime
 
 PHYSICS_UPDATE_SECONDS = 0.01
-GUI_UPDATE_SECONDS = 0.05
 
 
 class SimulationLooper():
     """Simulation Core with looper and top-level objects"""
 
-    def __init__(self, name, gui):
+    def __init__(self, name):
         # Init Simulation model
         self.simulation = SimulationState()
 
         # Add the sprites from the current simulation to the GUI
-        sprites = self.simulation.get_sprites()
-        self.gui = gui
-        self.gui.add_sprites(sprites)
+        # sprites = self.simulation.get_sprites()
+        # self.gui = gui
+        # self.gui.add_sprites(sprites)
 
     def run(self):
         "simulation objects update"
-        previous_time = datetime.datetime.now()
-        last_update_gui = previous_time
+       # global client_events
+        self.previous_time = datetime.datetime.now()
         # Main Loop
         while True:
-            # gui.clock.tick(60)  # !FIXME: Shouldn't be dependent on GUI
             current_time = datetime.datetime.now()
-
+            #print("#sim")
             # Inputs
-            simulation_is_ending = handle_input()
+            # simulation_is_ending = handle_input()
+            # (timestamp, effectors)
+            # client_events = [ev_1, ..., ev_n]
+            # Objecto com o input dos carros por TCP
+            # print(current_time)
 
             # Model updates
-            time_diff = current_time - previous_time
+            time_diff = current_time - self.previous_time
             if(time_diff.total_seconds() > PHYSICS_UPDATE_SECONDS):
+                # q.put(self)
+                # print(current_time)
                 self.simulation.update(time_diff.total_seconds())
-                previous_time = current_time
-
-            # GUI
-            gui_time_diff = current_time - last_update_gui
-            if(gui_time_diff.total_seconds() > GUI_UPDATE_SECONDS):
-                self.gui.update()
-                last_update_gui = current_time
+                # self.simulation.update(time_diff.total_seconds(), inputs)
+                self.previous_time = current_time
 
             # Exiting
-            if simulation_is_ending:
-                return
+            # if simulation_is_ending:
+            #     return
+
+    def get_state(self):
+        return self.simulation
+
+    def update_coisas(self, car_id, effectors):
+
+        self.simulation.update_car(car_id, effectors)
+
+    # registar clientes
+    # atualizar carro
+    # a

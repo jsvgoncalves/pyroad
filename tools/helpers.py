@@ -58,7 +58,11 @@ def load_configs(file_path):
 
     return cars
 
+counter = 0
+
 
 def load_car(car_json):
-    car = Car("Carro 1", car_json)
+    global counter
+    car = Car(str(counter), car_json)
+    counter += 1
     return car

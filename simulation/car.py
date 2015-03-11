@@ -3,43 +3,11 @@
 ## This file is part of PyRoad.
 ## 2014 João Gonçalves.
 
-import tools.helpers
-import pygame
-from math import degrees
+# import tools.helpers
+# import pygame
+# from math import degrees
 
-#from time import sleep
-GUI_SCALE = 100
-
-
-class CarSprite(pygame.sprite.Sprite):
-    """CarSprite used on pygame GUI"""
-    def __init__(self):
-        pygame.sprite.Sprite.__init__(self)  # call Sprite intializer
-        self.master_image, self.rect = tools.helpers.load_image('car.png', -1)
-        self.image = self.master_image
-        self.previous = [0, 0]
-
-    def update(self, pos_x, pos_y, current_angle):
-        # Just moves the car from one side to the other
-        # rect.move(x_offset, y_offset)
-        #self.rect.center = (GUI_SCALE * move_x, GUI_SCALE * move_y)
-        # Move to origin
-        self.rect.move_ip((-GUI_SCALE * self.previous[0],
-                           -GUI_SCALE * self.previous[1]))
-        # Move to new position
-        self.rect.move_ip((GUI_SCALE * pos_x,
-                           GUI_SCALE * pos_y))
-        # Rotate
-        self.rot_center(-degrees(current_angle))
-        # Update position meta
-        self.previous = (pos_x, pos_y)
-
-    def rot_center(self, angle):
-        """rotate a Surface, maintaining position."""
-        retaining_center = self.rect.center
-        self.image = pygame.transform.rotate(self.master_image, angle)
-        self.rect = self.image.get_rect()
-        self.rect.center = retaining_center
+# from time import sleep
 
 
 class Car():
@@ -52,7 +20,7 @@ class Car():
 
     def __init__(self, name, init_params):
         self.name = name
-        self.sprite = CarSprite()
+        # self.sprite = CarSprite()
 
         # Init car state
         self.velocity = [0, 0]
@@ -135,9 +103,9 @@ class Car():
 #            self.angle = 0
 
         # Updates the sprite of the car.
-        self.sprite.update(new_position[0],
-                           new_position[1],
-                           self.angle)
+        # self.sprite.update(new_position[0],
+        #                    new_position[1],
+        #                    self.angle)
 
         self.position = new_position
         # print("self.position[0], self.position[1], self.angle")
