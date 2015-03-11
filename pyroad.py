@@ -33,13 +33,13 @@ def main():
     # Initialize simulation looper
     sim = SimulationLooper("Simulation One")
     sim_t = threading.Thread(target=sim.run)
-    #sim_t.daemon = True
+    sim_t.daemon = True
     sim_t.start()
 
     # Create a GUI instance
     gui = Gui(sim)
     gui_t = threading.Thread(target=gui.run)
-    #gui_t.daemon = True
+    gui_t.daemon = True
     gui_t.start()
 
     # Start the Twisted Server
