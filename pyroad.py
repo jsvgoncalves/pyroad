@@ -4,35 +4,22 @@
 ## 2014 João Gonçalves.
 
 from __future__ import print_function
-from gui.gui import Gui
-from pygame.locals import *
-from simulation.simulationlooper import SimulationLooper
-
-from multiprocessing import Process
-from multiprocessing import Queue
+from Queue import Queue
 import threading
+from pygame.locals import *
+
 # event_queue = []
+from simulation.simulationlooper import SimulationLooper
+from gui.gui import Gui
+from server import pyroad_twisted as ts
+q = Queue()
 
 
-from twisted.internet import protocol, reactor, endpoints
-
-
-class Echo(protocol.Protocol):
-    def dataReceived(self, data):
-        self.transport.write(data)
-
-
-class EchoFactory(protocol.Factory):
-    def buildProtocol(self, addr):
-        return Echo()
-
-# a = 1
 def main():
-    #q = Queue()
 
     # Initialize simulation looper
     sim = SimulationLooper("Simulation One")
-    sim_t = threading.Thread(target=sim.run)
+    sim_t = threading.Thread(target=sim.run, args=(q,))
     sim_t.daemon = True
     sim_t.start()
 
@@ -43,8 +30,7 @@ def main():
     gui_t.start()
 
     # Start the Twisted Server
-    endpoints.serverFromString(reactor, "tcp:1234").listen(EchoFactory())
-    reactor.run()
+    ts.start(q)
 
     # Finish and clean up
     print("Simulation stopped.")

@@ -117,3 +117,6 @@ class Car():
     def get_effectors(self):
         """ sends the effectors back to the simulation engine """
         return self.acceleration_pedal, self.brake_pedal, self.steering
+
+    def get_name(self):
+        return self.name

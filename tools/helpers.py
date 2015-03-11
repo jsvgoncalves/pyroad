@@ -10,14 +10,15 @@ from simulation.car import Car
 
 CONFIG_DIR = 'config'
 
+
 def load_image(name, colorkey=None):
     fullname = join('res', 'img', name)
-    #print(fullname)
+    # print(fullname)
     try:
         image = pygame.image.load(fullname)
     except pygame.error, message:
         print 'Cannot load image:', fullname
-        raise SystemExit, message
+        raise SystemExit(message)
     image = image.convert()
     if colorkey is not None:
         if colorkey is -1:
@@ -66,3 +67,9 @@ def load_car(car_json):
     car = Car(str(counter), car_json)
     counter += 1
     return car
+
+
+class ClientInput():
+    def __init__(self, client_name, data):
+        self.client_name = client_name
+        self.data = data
