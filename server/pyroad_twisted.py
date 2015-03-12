@@ -6,7 +6,6 @@
 from twisted.internet import protocol, reactor, endpoints
 import threading
 from tools.helpers import ClientInput
-# q = Queue()
 
 
 class Echo(protocol.Protocol):

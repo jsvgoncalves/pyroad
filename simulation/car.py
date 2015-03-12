@@ -84,9 +84,8 @@ class Car():
         # self.track_edges_dist = sensor_data['track_edges_dist']
         # self.track_axis_dist = sensor_data['track_axis_dist']
         self.elapsed_time = sensor_data['elapsed_time']
-        return
 
-    def update(self, new_position):
+    def update(self, new_position, new_angle):
         """physics forces update"""
         # Updates car geo variables
         # self.steering = 0.002
@@ -99,6 +98,7 @@ class Car():
 #            self.angle = 0
 
         self.position = new_position
+        self.angle = new_angle
         # print("self.position[0], self.position[1], self.angle")
         # print(self.position[0],
         #       self.position[1],

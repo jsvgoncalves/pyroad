@@ -89,7 +89,7 @@ class SimulationState():
         position[0] = car.position[0] + velocity[0]
         position[1] = car.position[1] + velocity[1]
 
-        car.update(position)
+        car.update(position, car_angle)
 
         self.elapsed_time += delta_seconds
         sensor_data = {'elapsed_time': self.elapsed_time}
