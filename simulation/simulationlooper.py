@@ -36,8 +36,10 @@ class SimulationLooper():
             # print("#sim")
             # Inputs
             inputs = self.check_clients_input(q)
-            for c_input in inputs:
-                print(c_input.client_name)
+            for c_i in inputs:
+                # print(c_i)
+                for k, v in c_i.iteritems():
+                    print(str(k) + " : " + str(v))
             # simulation_is_ending = handle_input()
             # (timestamp, effectors)
             # client_events = [ev_1, ..., ev_n]
@@ -69,7 +71,7 @@ class SimulationLooper():
         inputs = []
         try:
             while not q.empty():
-                inputs.append(q.get_no_wait())
+                inputs.append(q.get_nowait())
         except Queue.Empty:
             pass
         finally:

@@ -5,6 +5,7 @@
 
 from twisted.internet import protocol, reactor, endpoints
 from tools.helpers import ClientInput
+import json
 
 
 class Echo(protocol.Protocol):
@@ -24,11 +25,16 @@ class Echo(protocol.Protocol):
         print(reason)
 
     def dataReceived(self, data):
-        self.transport.write(str(self.addr) + ": " + data)
         # print(dir(data))
-        print(str(self.addr) + ": " + data)
-        c_in = ClientInput(self.addr, data)
-        self.q.put(c_in)
+        # print(str(self.addr) + ": " + data)
+        try:
+            formatted_data = json.loads(data)
+            formatted_data['client_id'] = self.addr
+            # c_in = ClientInput(self.addr, formatted_data)
+            self.q.put(formatted_data)
+            self.transport.write("Message received and parsed to JSON")
+        except:
+            self.transport.write("Invalid message")
 
 
 class EchoFactory(protocol.Factory):
