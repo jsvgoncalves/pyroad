@@ -99,7 +99,7 @@ class Gui():
 
 class CarSprite(pygame.sprite.Sprite):
     """CarSprite used on pygame GUI"""
-    def __init__(self, sprite='car.bmp'):
+    def __init__(self, sprite='car.png'):
         pygame.sprite.Sprite.__init__(self)  # call Sprite intializer
         self.master_image, self.rect = load_image(sprite, -1)
         self.image = self.master_image
