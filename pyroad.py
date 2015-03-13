@@ -30,7 +30,7 @@ def main():
     gui_t.start()
 
     # Start the Twisted Server
-    ts.start(q)
+    ts.start(q, sim)
 
     # Finish and clean up
     print("Simulation stopped.")

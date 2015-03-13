@@ -18,10 +18,11 @@ class SimulationState():
         # Vehicles in the simulation
         self.cars = load_configs(CONFIG_FILE)
         self.elapsed_time = 0
+        self.sim_step = 0
 
     def update(self, delta_seconds):
         "simulation objects update"
-
+        self.sim_step += 1
         # Update vehicles
         # Maybe it would be best to request intentions from cars
         # And use physics engine, calculate new car state,

@@ -67,9 +67,3 @@ def load_car(car_json):
     car = Car(str(counter), car_json)
     counter += 1
     return car
-
-
-class ClientInput():
-    def __init__(self, client_name, data):
-        self.client_name = client_name
-        self.data = data
