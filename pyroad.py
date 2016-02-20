@@ -1,7 +1,9 @@
+#!/bin/python
+
 # -*- coding: utf-8 -*-
 #
 ## This file is part of PyRoad.
-## 2014 João Gonçalves.
+## 2014 Joao Goncalves.
 
 from __future__ import print_function
 from gui.gui import Gui
